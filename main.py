@@ -248,23 +248,19 @@ while True:
     hands, frame = detector.findHands(frame)
 
     # Initialize hand type
-    hand_type = "unknown"
+    for hand in hands:
+       handType = hand["type"]
 
     if hands:
         lmList = hands[0]
-        wrist_x = lmList['lmList'][0][0]  # x-coordinate of the wrist
-        if wrist_x < width / 2:
-            hand_type = "left"  # Left hand detected
-        else:
-            hand_type = "right"  # Right hand detected
-
-        # Player setup based on hand type
-        if hand_type == "left":
+        if handType == "left":
+            # Left hand detected
             openHandImg = pygame.image.load('images/openHand_left.png').convert_alpha()
             openHandImg = pygame.transform.scale(openHandImg, (128, 128))
             closedHandImg = pygame.image.load('images/closedHand_left.png').convert_alpha()
             closedHandImg = pygame.transform.scale(closedHandImg, (128, 128))
         else:
+            # Right hand detected
             openHandImg = pygame.image.load('images/openHand_right.png').convert_alpha()
             openHandImg = pygame.transform.scale(openHandImg, (128, 128))
             closedHandImg = pygame.image.load('images/closedHand_right.png').convert_alpha()
